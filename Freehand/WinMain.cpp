@@ -7,6 +7,16 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	case WM_CLOSE:
 		PostQuitMessage(69);
 		break;
+	case WM_KEYDOWN:
+		if (wParam == 'F') {
+			SetWindowText(hWnd, "Herp");
+		}
+		break;
+	case WM_KEYUP:
+		if (wParam == 'F') {
+			SetWindowText(hWnd, "Derp");
+		}
+		break;
 	}
 
 	return DefWindowProc(hWnd, msg, wParam, lParam);
@@ -68,7 +78,7 @@ int CALLBACK WinMain(
 	if (gResult == -1) {
 		return -1;
 	} else {
-		return msg.wParam;
+		return int(msg.wParam);
 	}
 
 	return 0;
