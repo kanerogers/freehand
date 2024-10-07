@@ -75,6 +75,7 @@ Window::Window(int width, int height, const char* name)
 
 	// sho that windo
 	ShowWindow(hWnd, SW_SHOWDEFAULT);
+	pGfx = std::make_unique<Graphics>(hWnd);
 }
 
 Window::~Window()
@@ -112,6 +113,11 @@ std::optional<int> Window::ProcessMessages()
 
 	// If we're not quitting, just return an empty optional
 	return {};
+}
+
+Graphics& Window::Gfx()
+{
+	return *pGfx;
 }
 
 LRESULT CALLBACK Window::HandleMsgSetup(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept
