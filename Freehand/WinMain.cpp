@@ -1,25 +1,27 @@
-#include "Window.h"
+#include "App.h"
 
 int CALLBACK WinMain(
-	HINSTANCE	hInstance,
-	HINSTANCE	hPrevInstance,
-	LPSTR		lpCmdLine,
-	int			nCmdShow)
+	_In_			HINSTANCE	hInstance,
+	_In_opt_	HINSTANCE	hPrevInstance,
+	_In_ LPSTR		lpCmdLine,
+	_In_ int		nCmdShow)
 {
-	Window wnd(800, 600, "Test Window");
-
-	MSG msg;
-	BOOL gResult;
-	while ((gResult = GetMessage(&msg, nullptr, 0, 0)) > 0)
+	try
+	{ 
+		return App{}.Go();
+	}
+	catch (const FreehandException& e)
 	{
-		TranslateMessage(&msg);
-		DispatchMessage(&msg);
+		MessageBox(nullptr, e.what(), e.GetType(), MB_OK | MB_ICONEXCLAMATION);
+	}
+	catch (const std::exception& e)
+	{
+		MessageBox(nullptr, e.what(), "Standard Exception", MB_OK | MB_ICONEXCLAMATION);
+	}
+	catch (...)
+	{
+		MessageBox(nullptr, "No details available", "Unknown Exception", MB_OK | MB_ICONEXCLAMATION);
 	}
 
-	if (gResult == -1) 
-	{
-		return -1;
-	}
-
-	return (int)msg.wParam;
+	return -1;
 }
